@@ -497,6 +497,7 @@
             var split = string.toUpperCase().split("-");
             var startInt = parseInt(split[0].split(":")[0]);
             var endInt = parseInt(split[1].split(":")[0]);
+            var mode12h = split[0].includes("AM") || split[0].includes("PM");
 
             var startHour = split[0].includes("PM") ? startInt + 12 : startInt;
             var endHour = split[1].includes("PM") ? endInt + 12 : endInt;
@@ -510,14 +511,17 @@
                 };
                 var parsedStr = "";
 
-                if (curHour > 12) {
-                    parsedStr += (curHour-12).toString() + ":00PM";
+                if (curHour > 12 && !mode12h) {
+                    parsedStr += (curHour).toString() + ":00"  + (mode12h ? 'PM':'');
+                }
+                else if (curHour > 12) {
+                    parsedStr += (curHour-12).toString() + ":00"  + (mode12h ? 'PM':'');
                 }
                 else if (curHour == 12) {
-                    parsedStr += curHour.toString() + ":00PM";
+                    parsedStr += curHour.toString() + ":00"  + (mode12h ? 'PM':'');
                 }
                 else {
-                    parsedStr += curHour.toString() + ":00AM";
+                    parsedStr += curHour.toString() + ":00"  + (mode12h ? 'AM':'');
                 }
 
                 output.push(parsedStr);
