@@ -3,7 +3,7 @@
 
         var settings = $.extend({
             days: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"], // Days displayed
-            hours: "7:00AM-10:00PM", // Hours displyed
+            hours: "00:00AM-11:00PM", // Hours displyed
             fontFamily: "Montserrat", // Font used in the component
             fontColor: "black", // Font colot used in the component
             fontWeight: "100", // Font weight used in the component
@@ -13,7 +13,9 @@
             headerBackgroundColor: "transparent", // Background color of headers
             triggerMethod: "click-and-drag", // Default selection method
             onSelected: function(){}, // handler called after selection
-            onRemoved: function(){} // handler called after removal
+            onRemoved: function(){}, // handler called after removal
+            data: null, //Initial data
+            dataOutput: 'json' //Type of output data json|array
         }, callerSettings||{});
 
         var parsed = parseHours(settings.hours);
@@ -22,7 +24,8 @@
 
         var mousedown = false;
         var devarionMode = false;
-
+        var days = settings.days;
+        var hours = settings.hoursParsed;
         var schedule = this;
 
         function getSelectedHour() {
@@ -40,6 +43,22 @@
                 output[i] = hoursSelected;
             }
             return output;
+        }
+
+        function getSelectedHourData() {
+            var dayContainer = $('.day');
+            var output = {};
+            for (var i = 0; i < dayContainer.length; i++) {
+                var children = $(dayContainer[i]).children();
+
+                var hoursSelected = {};
+                for (var j = 0; j < children.length; j++) {
+                    hoursSelected[j] = $(children[j]).hasClass('selected');
+                }
+                output[i] = hoursSelected;
+            }
+            
+            return settings.dataOutput == 'json' ? JSON.stringify(output) : output;
         }
 
         function dump() {
@@ -90,6 +109,9 @@
                 case 'getSelectedHour':
                     return getSelectedHour();
                     break;
+                case 'getSelectedHourData':
+                    return getSelectedHourData();
+                    break;
                 case 'dump':
                     return dump();
                     break;
@@ -99,8 +121,6 @@
         }
         // options is an object, initialize!
         else {
-            var days = settings.days; // option
-            var hours = settings.hoursParsed; // option
             var det = settings.hoursDetail;
             var triggerMethod = settings.triggerMethod;
 
@@ -164,8 +184,10 @@
                 $(day).data("day", days[i]);
 
                 for(var j = 0; j < hours.length; j++) {
+                    var selected = '';
+                    if(settings.data[i][j]) selected = " selected";
                     var hour = $('<div></div>', {
-                        class: "hour " + hours[j],
+                        class: "hour " + hours[j] + selected,
                     });
 
                     $(hour).data("start", det[j].start);

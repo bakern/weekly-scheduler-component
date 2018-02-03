@@ -55,7 +55,7 @@ This component has various options that you can utilize to customize the compone
 ```javascript
 var settings = {
     days: ["sun", "mon", "tue", "wed", "thu", "fri", "sat"], // Days displayed
-    hours: "7:00AM-10:00PM", // Hours displyed
+    hours: "00:00AM-11:00PM", // Hours displyed
     fontFamily: "Montserrat", // Font used in the component
     fontColor: "black", // Font colot used in the component
     fontWeight: "100", // Font weight used in the component
@@ -63,6 +63,11 @@ var settings = {
     hoverColor: "#727bad", // Background color when hovered
     selectionColor: "#9aa7ee", // Background color when selected
     headerBackgroundColor: "transparent", // Background color of headers
+    triggerMethod: "click-and-drag", // Default selection method
+    onSelected: function(){}, // handler called after selection
+    onRemoved: function(){}, // handler called after removal
+    data: null, //Initial data, push à json object to restore previous selection, you can get json string by calling $('#target').weekly_schedule("getSelectedHourData");
+    dataOutput: 'json' //Type of output data json|array
 }
 ```
 
@@ -88,4 +93,12 @@ Currently the only function you can run is:
 ```javascript
     $('#target').weekly_schedule("getSelectedHour");
     // Will return an object
+```
+- "getSelectedHourData"
+    - This function will return a javascript object of all hours that has been selected by the user broken up according to the days.
+
+```javascript
+    $('#target').weekly_schedule("getSelectedHourData");
+    // Will return a json string to save some where and use or restore with data settings
+    // IF settings.dataOutput is array, an array will be return
 ```
