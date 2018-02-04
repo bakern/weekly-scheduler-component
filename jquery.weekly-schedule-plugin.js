@@ -415,13 +415,11 @@
                     mousedown = true;
                     focusOn($(this).parent(), true);
                     if ($(this).hasClass('selected')) {
-                        schedule.trigger('selectionremoved')
-                        $(this).removeClass('selected');
+                        $(this).removeClass('selected').trigger('selectionremoved');
                         devarionMode = true;
                     }
                     else {
-                        schedule.trigger('selectionmade')
-                        $(this).addClass('selected');
+                        $(this).addClass('selected').trigger('selectionmade');
                     }
                 }
                 else {
@@ -472,13 +470,11 @@
                 focusOn($(this).parent(), true);
 
                 if ($(this).hasClass('selected')) {
-                    schedule.trigger('selectionremoved')
-                    $(this).removeClass('selected');
+                    $(this).removeClass('selected').trigger('selectionremoved');
                     devarionMode = true;
                 }
                 else {
-                    schedule.trigger('selectionmade')
-                    $(this).addClass('selected');
+                    $(this).addClass('selected').trigger('selectionmade');
                 }
                 $(this).removeClass('hover');
             }).on('mouseup', function() {
