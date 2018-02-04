@@ -57,7 +57,7 @@
                 }
                 output[i] = hoursSelected;
             }
-            
+
             return settings.dataOutput == 'json' ? JSON.stringify(output) : output;
         }
 
@@ -80,9 +80,9 @@
                         on = false;
                         selected.push($(cur));
                         output += curDay + " " +
-                                  $(selected[0]).data('start') + " start, " + curDay +
-                                  " " +$(selected[selected.length - 1]).data('end')
-                                  + " end, ";
+                            $(selected[0]).data('start') + " start, " + curDay +
+                            " " +$(selected[selected.length - 1]).data('end')
+                            + " end, ";
                         selected = [];
                     }
                     else if (!on && curSelected) {
@@ -93,9 +93,9 @@
                     } else if (on && !curSelected) {
                         on = false;
                         output += curDay + " " +
-                                  $(selected[0]).data('start') + " start, " + curDay +
-                                  " " +$(selected[selected.length - 1]).data('end')
-                                  + " end, ";
+                            $(selected[0]).data('start') + " start, " + curDay +
+                            " " +$(selected[selected.length - 1]).data('end')
+                            + " end, ";
                         selected = [];
                     }
                 }
@@ -185,7 +185,9 @@
 
                 for(var j = 0; j < hours.length; j++) {
                     var selected = '';
-                    if(settings.data[i][j]) selected = " selected";
+                    try {
+                        if (settings.data[i][j]) selected = " selected";
+                    } catch (e) {}
                     var hour = $('<div></div>', {
                         class: "hour " + hours[j] + selected,
                     });
