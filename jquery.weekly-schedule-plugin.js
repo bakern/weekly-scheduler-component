@@ -314,11 +314,11 @@
              * Hook eventlisteners
              */
 
-            $("<style type='text/css' scoped> .hover { background: "
+            $("<style type='text/css' scoped> .schedule .hour.hover { background: "
                 + settings.hoverColor +
-                " !important;} .selected { background: "
+                " !important;} .schedule .hour.selected { background: "
                 + settings.selectionColor +
-                " !important; } .disabled { pointer-events: none !important; opacity: 0.3 !important; box-shadow: none !important; }</style>")
+                " !important; } .schedule .hour.disabled { pointer-events: none !important; opacity: 0.3 !important; box-shadow: none !important; }</style>")
                 .appendTo(schedule);
 
             // Prevent Right Click
